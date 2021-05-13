@@ -137,7 +137,7 @@ http://www.tooplate.com/view/2095-level
                                             <i class="fa fa-2x fa-bed tm-form-element-icon"></i>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">Check Availability</button>
+                                            <button type="submit" class="btn btn-primary tm-btn-search" onclick="submitvalues()">Check Availability</button>
                                         </div>
                                       </div>
                                       <div class="form-row clearfix pl-2 pr-2 tm-fx-col-xs">
@@ -390,7 +390,38 @@ http://www.tooplate.com/view/2095-level
             ------------------------------------------------*/
             var map = '';
             var center;
+            function submitvalues() {
+                alert("values registered")
+                var check_in = document.getElementById("inputCheckIn").value;
+                var check_out = document.getElementById("inputCheckOut").value;
+                var adult = document.getElementById("adult").value;
+                var children = document.getElementById("children").value;
+                var room = document.getElementById("room").value;
+                var api = "https://jsuluwoqwj.execute-api.us-east-1.amazonaws.com/Dev/booking"
 
+                var params = {
+                        "inputCheckIn": check_in,
+                        "inputCheckOut": check_out,
+                        "adult": adult,
+                        "children": children,
+                        "room": room
+                };
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.Status == 200){
+                        alert(xhttp.responseText);
+                    }
+                };
+                xhttp.open("POST",api,false);
+                var a = xhttp.send(JSON.stringify(params));
+                document.getElementById("inputCheckIn").value= '';
+                document.getElementById("inputCheckOut").value= '';
+                document.getElementById("adult").value= '';
+                document.getElementById("children").value= '';
+                document.getElementById("room").value= '';
+                
+            }
             function initialize() {
                 var mapOptions = {
                     zoom: 16,
